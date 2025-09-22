@@ -3,10 +3,7 @@ import gradio as gr
 from PIL import Image
 from functools import partial
 
-HEADER = """
-# 2D → 3D Demo (Backend Removed)
-**This is a placeholder demo. Model-related functionalities have been removed.**
-"""
+HEADER = ""
 
 def check_input_image(input_image):
     if input_image is None:
@@ -58,16 +55,7 @@ with gr.Blocks() as demo:
                     label="Output Model",
                     interactive=False,
                 )
-    with gr.Row(variant="panel"):
-        gr.Examples(
-            examples=[],  # Empty since backend/model is removed
-            inputs=[input_image],
-            outputs=[processed_image, output_model],
-            cache_examples=False,
-            fn=partial(run_example),
-            label="Examples",
-        )
-    submit.click(fn=check_input_image, inputs=[input_image]).success(
+click(fn=check_input_image, inputs=[input_image]).success(
         fn=preprocess,
         inputs=[input_image, do_remove_background, foreground_ratio],
         outputs=[processed_image],
