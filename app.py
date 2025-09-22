@@ -51,8 +51,8 @@ with gr.Blocks() as demo:
     with gr.Row():
         input_image = gr.Image(
             label="Upload Image",
-            type="pil",
-            source="upload"  # Only valid Gradio source
+            type="pil",       # keep PIL image
+            image_mode="RGBA" # optional
         )
 
     processed_image = gr.Image(label="Processed Preview", interactive=False)
