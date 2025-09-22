@@ -74,7 +74,6 @@ def run_example(image_pil):
     return preprocessed, mesh_name
 
 with gr.Blocks() as demo:
-    gr.Markdown(HEADER)
     with gr.Row(variant="panel"):
         with gr.Column():
             with gr.Row():
