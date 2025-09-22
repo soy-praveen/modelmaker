@@ -1,9 +1,6 @@
-import os
 import gradio as gr
 from PIL import Image
 from functools import partial
-
-HEADER = ""
 
 def check_input_image(input_image):
     if input_image is None:
@@ -23,7 +20,6 @@ def run_example(image_pil):
     return preprocessed, output_model
 
 with gr.Blocks() as demo:
-    gr.Markdown(HEADER)
     with gr.Row(variant="panel"):
         with gr.Column():
             with gr.Row():
@@ -55,7 +51,8 @@ with gr.Blocks() as demo:
                     label="Output Model",
                     interactive=False,
                 )
-click(fn=check_input_image, inputs=[input_image]).success(
+
+    submit.click(fn=check_input_image, inputs=[input_image]).success(
         fn=preprocess,
         inputs=[input_image, do_remove_background, foreground_ratio],
         outputs=[processed_image],
