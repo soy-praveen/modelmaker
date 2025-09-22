@@ -77,4 +77,4 @@ with gr.Blocks() as demo:
         outputs=[output_model],
     )
 
-demo.launch()
+demo.launch(share=True)
