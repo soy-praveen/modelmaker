@@ -1,7 +1,4 @@
-# Cell: Fix run.py - remove invalid cache_dir parameter
-%cd /content/workspace/ModelMaker
 
-run_py_content = '''#!/usr/bin/env python3
 import sys
 import os
 import argparse
@@ -80,9 +77,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-'''
-
-with open("run.py", "w") as f:
-    f.write(run_py_content)
-
-print("✅ Fixed run.py - removed invalid cache_dir parameter!")
