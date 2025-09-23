@@ -1,11 +1,15 @@
+# Cell: Fix run.py - remove invalid cache_dir parameter
+%cd /content/workspace/ModelMaker
+
+run_py_content = '''#!/usr/bin/env python3
 import sys
 import os
 import argparse
 from PIL import Image
 import torch
 
-# PERMANENT MODEL CACHE SETUP
-cache_dir = "/gdrive/My Drive/ModelMaker/models_cache"
+# PERMANENT MODEL CACHE SETUP (Environment variables only)
+cache_dir = "/content/drive/My Drive/ModelMaker/models_cache"
 os.makedirs(cache_dir, exist_ok=True)
 os.environ['HF_HOME'] = cache_dir
 os.environ['HF_HUB_CACHE'] = cache_dir  
@@ -23,6 +27,8 @@ def main():
     
     if not os.path.exists(args.input_image):
         print(f"❌ Image not found: {args.input_image}")
+        print("Available files:")
+        os.system("ls -la")
         return
         
     print(f"Processing: {args.input_image}")
@@ -38,13 +44,13 @@ def main():
     import rembg
     import numpy as np
     
-    # Load model with DRIVE CACHE (no more downloads!)
-    print("Loading model from Drive cache...")
+    # Load model WITHOUT cache_dir parameter (TripoSR doesn't support it)
+    print("Loading model from cache...")
     model = TSR.from_pretrained(
         "stabilityai/TripoSR",
         config_name="config.yaml", 
-        weight_name="model.ckpt",
-        cache_dir=cache_dir  # Uses Drive cache!
+        weight_name="model.ckpt"
+        # NO cache_dir parameter - uses environment variables instead
     )
     model.renderer.set_chunk_size(131072)
     model.to(device)
@@ -74,3 +80,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
+
+with open("run.py", "w") as f:
+    f.write(run_py_content)
+
+print("✅ Fixed run.py - removed invalid cache_dir parameter!")
